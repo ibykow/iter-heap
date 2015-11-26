@@ -12,12 +12,12 @@ static void test_heap_insert_remove_v()
     heap_insert_v(heap, &len, &(int) {10}, size, heap_int_min_cmp);
     heap_insert_v(heap, &len, &(int) {55}, size, heap_int_min_cmp);
     heap_insert_v(heap, &len, &(int) {56}, size, heap_int_min_cmp);
-    heap_insert_v(heap, &len, &(int) {4}, size, heap_int_min_cmp);
+    heap_insert_v(heap, &len, &(int) {10}, size, heap_int_min_cmp);
 
     for (i = 0; i < HEAP_LEN; i++) {
         res = heap_remove_v(heap, &len, &n, size, heap_int_min_cmp);
         TEST_Q(res == (HEAP_LEN - i - 1));
-        TEST_Q(n > prev);
+        TEST_Q(n >= prev);
         prev = n;
     }
 }
@@ -54,35 +54,35 @@ static void test_heap_new()
 
 static void test_heap_sort()
 {
-    int arr[] = { 8, 2, 12, 25, 5, 4, 3, 1 }, n = 0;
+    int arr[] = { 8, 2, 12, 25, 5, 4, 2, 1 }, n = 0;
 
     size_t size = sizeof(int), len = sizeof(arr) / size, i;
 
     TEST_Q(heap_sort(arr, len, size, heap_int_min_cmp) == len);
 
     for (i = 0; i < len; i++) {
-        TEST_Q(n < arr[i]);
+        TEST_Q(n <= arr[i]);
         n = arr[i];
     }
 }
 
 static void test_heap_sort_max()
 {
-    int arr[] = { 8, 2, 12, 25, 5, 4, 3, 1 }, n = 100;
+    int arr[] = { 8, 2, 12, 25, 5, 4, 2, 1 }, n = 100;
 
     size_t size = sizeof(int), len = sizeof(arr) / size, i;
 
     heap_sort(arr, len, size, heap_int_max_cmp);
 
     for (i = 0; i < len; i++) {
-        TEST_Q(n > arr[i]);
+        TEST_Q(n >= arr[i]);
         n = arr[i];
     }
 }
 
 static void test_max_heap()
 {
-    int arr[] = { 8, 2, 12, 25, 5, 4, 3, 1 }, prev = 100, n = 0;
+    int arr[] = { 8, 2, 12, 25, 5, 4, 3, 5 }, prev = 100, n = 0;
 
     size_t size = sizeof(int), len = sizeof(arr) / size, i;
     struct heap_s *h = heap_new(len, size, heap_int_max_cmp);
@@ -92,7 +92,7 @@ static void test_max_heap()
 
     for (i = 0; i < len; i++) {
         heap_remove(h, &n);
-        TEST_Q(n < prev);
+        TEST_Q(n <= prev);
         prev = n;
     }
 

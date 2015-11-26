@@ -37,7 +37,7 @@ static size_t heap_sift_down_from(void *arr, size_t len, void *e, size_t size,
             next_i++;
         }
 
-        if (cmp(e, HEAP_AT(arr, size, next_i)) < 0)
+        if (cmp(e, HEAP_AT(arr, size, next_i)) <= 0)
             break;
 
         memmove(HEAP_AT(arr, size, i), HEAP_AT(arr, size, next_i), size);
@@ -52,7 +52,7 @@ static size_t heap_sift_down_from(void *arr, size_t len, void *e, size_t size,
             next_i++;
         }
 
-        if (cmp(e, HEAP_AT(arr, size, next_i)) > 0) {
+        if (cmp(e, HEAP_AT(arr, size, next_i)) >= 0) {
             memmove(HEAP_AT(arr, size, i), HEAP_AT(arr, size, next_i), size);
             i = next_i;
         }
@@ -138,7 +138,7 @@ size_t heap_insert_v(void *arr, size_t *len, void *e, size_t size,
 
     size_t i = *len, parent_i = HEAP_PARENT(i);
 
-    while(i && (cmp(e, HEAP_AT(arr, size, parent_i)) < 0)) {
+    while(i && (cmp(e, HEAP_AT(arr, size, parent_i)) <= 0)) {
         memmove(HEAP_AT(arr, size, i), HEAP_AT(arr, size, parent_i), size);
         i = parent_i;
         parent_i = HEAP_PARENT(i);
